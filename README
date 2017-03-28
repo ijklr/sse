@@ -1,0 +1,11 @@
+This is a quick speed comparison of various ways to get dot-product. 
+The code is a modified version of 
+http://blog.theincredibleholk.org/blog/2012/12/10/optimizing-dot-product/
+so that it runs on OSX, also I've gotten rid of some GPU dependencies.
+
+-Simply run  `make`
+-it creates `dot-product` executable.
+-then run that, the benchmarking will start.
+
+Note:
+C++ `Makefile` compiler flags can be changed, depending on your platform.
