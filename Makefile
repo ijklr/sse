@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -I. -std=c++14 -O3 -Wall -O3 -march=native -ffast-math
+CXXFLAGS = -I. -Wall -Ofast -march=native
 
 all: dot align
 

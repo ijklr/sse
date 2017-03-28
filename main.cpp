@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <align.h>
+#include <numeric>
 
 using namespace std;
 
@@ -16,13 +17,13 @@ const int NUM_TRIALS = 500;
 
    template<typename DotFunction>
    float time_dot(DotFunction f, int N, float *A, float *B) {
-   auto total_sec = 0;
-   auto total_usec = 0;
+   long total_sec = 0;
+   long total_usec = 0;
 
    for(int i = 0; i < NUM_TRIALS; ++i) {
        struct timeval tv, _tv;
        gettimeofday(&_tv,NULL);
-       auto dot = f(N, A, B);
+       int dot = f(N, A, B);
        gettimeofday(&tv,NULL);
        // A relatively harmless call to keep the compiler from realizing
        // we don't actually do any useful work with the dot product.
@@ -30,7 +31,7 @@ const int NUM_TRIALS = 500;
        total_sec +=(tv.tv_sec - _tv.tv_sec);	
        total_usec += (tv.tv_usec - _tv.tv_usec);
    }
-       auto total =  total_sec * 1000000 + total_usec; 
+       long total =  total_sec * 1000000 + total_usec; 
 
    return float(total) / (1e6 * NUM_TRIALS);
    }
@@ -48,6 +49,7 @@ float *generate_vector(int N) {
 }
 
 float simple_dot(int, float *, float *);
+float library_dot(int, float *, float *);
 float simple_prefetch_dot(int, float *, float *);
 float unroll_dot(int, float *, float *);
 float sse_dot(int, float *, float *);
@@ -58,12 +60,12 @@ float blas_dot(int, float *, float *);
 float cublas_dot(int, float *, float *);
 
 int main() {
-    auto N = (128 << 20) / sizeof(float);
+    int N = (128 << 20) / sizeof(float);
 
     cout << "Generating " << N << " element vectors." << endl;
 
-    auto A = generate_vector(N);
-    auto B = generate_vector(N);
+    float *A = generate_vector(N);
+    float *B = generate_vector(N);
 
     assert(A);
     assert(B);
@@ -71,6 +73,7 @@ int main() {
 #define TIME(f) cout << setw(24) << #f "\t" << time_dot(f, N, A, B) << endl;
 
     TIME(simple_dot);
+    //TIME(library_dot);
     TIME(simple_prefetch_dot);
     TIME(unroll_dot);
     TIME(sse_dot);
@@ -92,6 +95,10 @@ float simple_dot(int N, float *A, float *B) {
     }
 
     return dot;
+}
+
+float library_dot(int N, float *A, float *B) {
+    return std::inner_product(A, A+N, B, 0);
 }
 
 float unroll_dot(int N, float *A, float *B) {
