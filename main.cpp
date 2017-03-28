@@ -73,7 +73,7 @@ int main() {
 #define TIME(f) cout << setw(24) << #f "\t" << time_dot(f, N, A, B) << endl;
 
     TIME(simple_dot);
-    //TIME(library_dot);
+    TIME(library_dot);
     TIME(simple_prefetch_dot);
     TIME(unroll_dot);
     TIME(sse_dot);

@@ -3,7 +3,8 @@ The code is a modified version of
 http://blog.theincredibleholk.org/blog/2012/12/10/optimizing-dot-product/
 so that it runs on OSX, also I've gotten rid of some GPU dependencies.
 
--Simply run  `make`
+
+-There's no other dependencies, just git clone and `make`
 -it creates `dot-product` executable.
 -then run that, the benchmarking will start.
 
