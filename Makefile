@@ -1,5 +1,6 @@
 CXX = g++
-CXXFLAGS = -I. -std=c++14 -O3 -Wall -g #-march=corei7-avx -mtune=corei7-avx
+#CXXFLAGS = -I. -std=c++14 -O3 -Wall -g -march=corei7-avx -mtune=corei7-avx
+CXXFLAGS = -I. -std=c++14 -O3 -Wall -O3 -march=native -ffast-math
 
 all: dot align
 
