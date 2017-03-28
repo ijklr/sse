@@ -98,7 +98,7 @@ float simple_dot(int N, float *A, float *B) {
 }
 
 float library_dot(int N, float *A, float *B) {
-    return std::inner_product(A, A+N, B, 0);
+    return std::inner_product(A, A+N, B, 0.0f);
 }
 
 float unroll_dot(int N, float *A, float *B) {
